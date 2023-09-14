@@ -10,18 +10,19 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture cenario, personagem1, texturaAtaquePersonagem1;
+	Texture cenario, personagem1Direita, personagem1Esquerda, texturaAtaquePersonagem1;
 	private Sprite ninja, ataquePersonagem1;
 	private float xP1, yP1, xA1, yA1, velocidadePulo, gravidade;
-	private boolean isPulando, isAtacando;
+	private boolean isPulando, isAtacando, isLancado;
 	
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		cenario = new Texture("Cenario.png");
-		personagem1 = new Texture("ninja1.png");
-		ninja = new Sprite(personagem1);
+		personagem1Direita = new Texture("ninja1.png");
+		personagem1Esquerda = new Texture("ninja2.png");
+		ninja = new Sprite(personagem1Direita);
 		texturaAtaquePersonagem1 = new Texture("shuriken.png");
 		ataquePersonagem1 = new Sprite(texturaAtaquePersonagem1);
 		xP1 = 10;
@@ -30,6 +31,7 @@ public class Game extends ApplicationAdapter {
 		yA1 = yP1 ;
 		isPulando = false;
 		isAtacando = false;
+		isLancado = false;
 		gravidade = -0.99f;
 	}
 
@@ -41,8 +43,8 @@ public class Game extends ApplicationAdapter {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
 		batch.draw(cenario, 0, 0);
+		batch.draw(ninja, xP1, yP1);
 		batch.draw(ataquePersonagem1, xA1 + ninja.getWidth()/2, yA1 + ninja.getHeight()/2);
-		batch.draw(personagem1, xP1, yP1);
 		batch.end();
 	}
 	
@@ -50,7 +52,8 @@ public class Game extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		cenario.dispose();
-		personagem1.dispose();
+		personagem1Esquerda.dispose();
+		personagem1Direita.dispose();
 		texturaAtaquePersonagem1.dispose();
 	}
 	
@@ -58,13 +61,13 @@ public class Game extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
 			if(xP1 < cenario.getWidth() - ninja.getWidth()) {
 				xP1 += 10;
-				personagem1 = new Texture("ninja1.png");
+				ninja = new Sprite(personagem1Direita);;
 			}
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
 			if(xP1 > 0) {
 				xP1 -= 10;
-				personagem1 = new Texture("ninja2.png");
+				ninja = new Sprite(personagem1Esquerda);;
 			}
 		}
 			
@@ -88,15 +91,27 @@ public class Game extends ApplicationAdapter {
 		
 	}
 	public void moveAtaque() {
-		xA1 = xP1;
-		yA1 = yP1;
-	}
-	public void ataque() {
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			isAtacando = true;
 		}
-		if(isAtacando) {
-			xA1 += 10;
+		if(ninja.getTexture() == personagem1Direita && isAtacando) {
+			xA1 += 20;
+			atacando();
+			
+		}else if(ninja.getTexture() == personagem1Esquerda && isAtacando) {
+			xA1 -= 20;
+			atacando();
+			
+		}else {
+			xA1 = xP1;
+			yA1 = yP1;	
+		}
+	}
+	public void atacando() {
+		if(xA1 > cenario.getWidth() || xA1 < -100) {
+			isAtacando = false;
+			xA1 = xP1;
+			yA1 = yP1;
 		}
 	}
 }
