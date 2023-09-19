@@ -94,8 +94,9 @@ public class Game extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			isAtacando = true;
 		}
-		if(ninja.getTexture() == personagem1Direita && isAtacando) {
+		if(ninja.getTexture() == personagem1Direita && isAtacando && !isLancado) {
 			xA1 += 20;
+			isLancado = true;
 			atacando();
 			
 		}else if(ninja.getTexture() == personagem1Esquerda && isAtacando) {
