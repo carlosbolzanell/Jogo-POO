@@ -14,7 +14,14 @@ public class Game extends ApplicationAdapter {
 	private Sprite ninja, ataquePersonagem1;
 	private float xP1, yP1, xA1, yA1, velocidadePulo, gravidade;
 	private boolean isPulando, isAtacando, isLancado;
+	private Ataque ataque = new Ataque();
 	
+	public Sprite getNinja() {
+		return this.ninja;
+	}
+	public String getDirecao() {
+		return ninja.getTexture().toString();
+	}
 	
 	@Override
 	public void create () {
@@ -44,7 +51,7 @@ public class Game extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(cenario, 0, 0);
 		batch.draw(ninja, xP1, yP1);
-		batch.draw(ataquePersonagem1, xA1 + ninja.getWidth()/2, yA1 + ninja.getHeight()/2);
+		batch.draw(ataque.getSprite(), xA1 + ninja.getWidth()/2, yA1 + ninja.getHeight()/2);
 		batch.end();
 	}
 	
@@ -94,15 +101,26 @@ public class Game extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			isAtacando = true;
 		}
+<<<<<<< HEAD
 		if(ninja.getTexture() == personagem1Direita && isAtacando && !isLancado) {
 			xA1 += 20;
 			isLancado = true;
 			atacando();
+=======
+		if(ninja.getTexture() == personagem1Direita && isAtacando) {
+			if(!isLancado) {
+				xA1 += 10;
+				atacando();
+				isLancado = true;
+			}
+>>>>>>> 27998924bf8d8f01b9483f859e0d7a3a72f91815
 			
 		}else if(ninja.getTexture() == personagem1Esquerda && isAtacando) {
-			xA1 -= 20;
-			atacando();
-			
+			if(!isLancado) {
+				xA1 -= 10;
+				atacando();
+				isLancado = true;
+			}
 		}else {
 			xA1 = xP1;
 			yA1 = yP1;	
@@ -111,6 +129,11 @@ public class Game extends ApplicationAdapter {
 	public void atacando() {
 		if(xA1 > cenario.getWidth() || xA1 < -100) {
 			isAtacando = false;
+			if(ataquePersonagem1.getWidth() > ninja.getWidth()) {
+				isLancado = false;
+			}else if(ataquePersonagem1.getWidth() < ninja.getWidth()) {
+				isLancado = true;
+			}
 			xA1 = xP1;
 			yA1 = yP1;
 		}
