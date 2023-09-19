@@ -1,43 +1,65 @@
 package com.game.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Ataque extends ApplicationAdapter{
-	private Texture textura;
-	private Sprite ataque;
+public class Ataque{
+	private Texture textura = new Texture("shuriken.png");
+	private Sprite sprite = new Sprite(textura);
 	private int velocidade;
+	private int posicaoX = 10;
+	private int posicaoY = 87;
 	private boolean direcao;
 	private boolean isAtacando;
-	private Game game;
 	
-	@Override
-	public void create () {
-		textura = new Texture("shuriken.png");
-		ataque =new Sprite(textura);
-		velocidade = 10;
-		direcao = false;
-		isAtacando = false;
-		game = new Game();	
+	public Ataque(Texture textura, int velocidade, int posicaoX, int posicaoY) {
+		super();
+		setTextura(textura);
+		this.velocidade = velocidade;
+		this.posicaoX = posicaoX;
+		this.posicaoY = posicaoY;
 	}
-	
-	public void atirar() {
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			isAtacando = true;
-		}
-		if(game.getDirecao().equals("personagem1Direita")) {
-			direcao = true;
-		}
-		if(direcao) {
-			game.getNinja().setX(velocidade);
-		}
+	public Ataque() {
 		
 	}
-	public Sprite getSprite() {
-		return this.ataque;
+	public Texture getTextura() {
+		return textura;
 	}
+	public void setTextura(Texture textura) {
+		this.textura = textura;
+	}
+	public Sprite getSprite() {
+		return sprite;
+	}
+	public void setSprite(Texture sprite) {
+		this.sprite = new Sprite(sprite);
+	}
+	public int getVelocidade() {
+		return velocidade;
+	}
+	public void setVelocidade(int velocidade) {
+		this.velocidade = velocidade;
+	}
+	public int getPosicaoX() {
+		return posicaoX;
+	}
+	public void setPosicaoX(int posicaoX) {
+		this.posicaoX = posicaoX;
+	}
+	public void moverPosicaoX(int velocidadeMovimento) {
+		this.posicaoX += velocidadeMovimento;
+	}
+	public void trazerPosicaoX(int velocidadeMovimento) {
+		this.posicaoX -= velocidadeMovimento;
+	}
+	public int getPosicaoY() {
+		return posicaoY;
+	}
+	public void setPosicaoY(int posicaoY) {
+		this.posicaoY = posicaoY;
+	}
+	
 
 }
