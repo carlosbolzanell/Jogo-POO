@@ -5,10 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Personagem {
-	private Texture textura = new Texture("ninja1.png");
+public class Personagem2 {
+	private String personagem;
+	private Texture textura = new Texture(personagem+".png");
 	private Sprite sprite = new Sprite(textura);
-	private int posicaoX = 10;
+	private int posicaoX = 1100;
 	private int posicaoY = 87;	
 	private float vida;
 	private float dano;
@@ -16,19 +17,17 @@ public class Personagem {
 	private float gravidade = -0.99f;
 	private boolean isPulando;
 	private boolean isAtacando = false;
-	private Ataque ataque = new Ataque();
+	private Ataque2 ataque2 = new Ataque2();
 	
-	public Personagem(Texture textura, int posicaoX, int posicaoY, float vida, float dano) {
+	public Personagem2(Texture textura, int posicaoX, int posicaoY, float vida, float dano) {
 		super();
 		setTextura(textura);
-		this.posicaoX = posicaoX;
-		this.posicaoY = posicaoY;
 		this.vida = vida;
 		this.dano = dano;
 	}
 	
 	
-	public Personagem() {
+	public Personagem2() {
 		
 	}
 	
@@ -56,11 +55,11 @@ public class Personagem {
 	public void setDano(float dano) {
 		this.dano = dano;
 	}
-	public Ataque getAtaque() {
-		return ataque;
+	public Ataque2 getAtaque() {
+		return ataque2;
 	}
-	public void setAtaque(Ataque ataque) {
-		this.ataque = ataque;
+	public void setAtaque(Ataque2 ataque) {
+		this.ataque2 = ataque;
 	}
 	public int getPosicaoX() {
 		return posicaoX;
@@ -82,7 +81,7 @@ public class Personagem {
 	}
 	
 	public void pular() {
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			if(posicaoY == 87) {
 				isPulando = true;
 				velocidadePulo = 20f;
@@ -100,13 +99,12 @@ public class Personagem {
 		
 	}
 	public void mover() {
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(posicaoX < 1100){
-				setTextura(new Texture("ninja1.png"));
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			if(posicaoX < 1100) {
 				posicaoX += 10;		
 			}
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			if(posicaoX > 0) {
 				posicaoX -= 10;				
 			}
@@ -114,25 +112,26 @@ public class Personagem {
 	}
 	
 	public void atacar() {
-		if(Gdx.input.isKeyPressed(Input.Keys.R)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.P)) {
 			isAtacando = true;
 		}
 		if(isAtacando) {
-			if(ataque.getPosicaoX()<1280) {
-				ataque.moverPosicaoX(20);
+			if(ataque2.getPosicaoX()>0) {
+				ataque2.trazerPosicaoX(20);
 			}else {
 				atacou();
 			}
 		}else {
-			ataque.setPosicaoX(this.posicaoX);
-			ataque.setPosicaoY(this.posicaoY);
+			ataque2.setPosicaoX(this.posicaoX);
+			ataque2.setPosicaoY(this.posicaoY);
 		}
 	}
 	public void atacou() {
-		ataque.setPosicaoX(this.posicaoX);
-		ataque.setPosicaoY(this.posicaoY);
+		ataque2.setPosicaoX(this.posicaoX);
+		ataque2.setPosicaoY(this.posicaoY);
 		isAtacando = false;
 	}
 	
 
 }
+
