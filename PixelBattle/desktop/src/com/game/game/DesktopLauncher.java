@@ -11,14 +11,6 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		jogo();
 	}
-	public static void menu() {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
-		config.setTitle("PixelBattle");
-		config.setWindowedMode(1280, 720);
-		new Lwjgl3Application(new Menu(), config);
-		
-	}
 	public static void jogo() {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);

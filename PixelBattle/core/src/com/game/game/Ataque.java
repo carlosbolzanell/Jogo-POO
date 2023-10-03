@@ -9,17 +9,10 @@ public class Ataque{
 	private Texture textura = new Texture("shuriken.png");
 	private Sprite sprite = new Sprite(textura);
 	private int velocidade;
-	private int posicaoX = 10;
-	private int posicaoY = 87;
-	private boolean direcao;
-	private boolean isAtacando;
 	
-	public Ataque(Texture textura, int velocidade, int posicaoX, int posicaoY) {
-		super();
+	public Ataque(Texture textura, int velocidade) {
 		setTextura(textura);
 		this.velocidade = velocidade;
-		this.posicaoX = posicaoX;
-		this.posicaoY = posicaoY;
 	}
 	public Ataque() {
 		
@@ -41,24 +34,6 @@ public class Ataque{
 	}
 	public void setVelocidade(int velocidade) {
 		this.velocidade = velocidade;
-	}
-	public int getPosicaoX() {
-		return posicaoX;
-	}
-	public void setPosicaoX(int posicaoX) {
-		this.posicaoX = posicaoX;
-	}
-	public void moverPosicaoX(int velocidadeMovimento) {
-		this.posicaoX += velocidadeMovimento;
-	}
-	public void trazerPosicaoX(int velocidadeMovimento) {
-		this.posicaoX -= velocidadeMovimento;
-	}
-	public int getPosicaoY() {
-		return posicaoY;
-	}
-	public void setPosicaoY(int posicaoY) {
-		this.posicaoY = posicaoY;
 	}
 	
 

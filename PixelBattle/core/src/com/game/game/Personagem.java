@@ -1,15 +1,15 @@
 package com.game.game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Personagem {
-	private Texture textura = new Texture("ninja1.png");
-	private Sprite sprite = new Sprite(textura);
-	private int posicaoX = 10;
-	private int posicaoY = 87;	
+	private Texture textura;
+	private Sprite sprite;
+	private int posicaoX =10;
+	private int posicaoY =87;	
 	private float vida;
 	private float dano;
 	private float velocidadePulo = 20f;
@@ -18,13 +18,10 @@ public class Personagem {
 	private boolean isAtacando = false;
 	private Ataque ataque = new Ataque();
 	
-	public Personagem(Texture textura, int posicaoX, int posicaoY, float vida, float dano) {
-		super();
+	public Personagem(String textura) {
 		setTextura(textura);
-		this.posicaoX = posicaoX;
-		this.posicaoY = posicaoY;
-		this.vida = vida;
-		this.dano = dano;
+		setSprite(getTextura());	
+		ataque.getSprite().setPosition(getPosicaoX() + getSprite().getWidth()/2, getPosicaoY() + getSprite().getHeight()/2);
 	}
 	
 	
@@ -35,8 +32,8 @@ public class Personagem {
 	public Texture getTextura() {
 		return textura;
 	}
-	public void setTextura(Texture textura) {
-		this.textura = textura;
+	public void setTextura(String textura) {
+		this.textura = new Texture(textura);
 	}
 	public Sprite getSprite() {
 		return sprite;
@@ -74,11 +71,12 @@ public class Personagem {
 	public void setPosicaoY(int posicaoY) {
 		this.posicaoY = posicaoY;
 	}
-	
+
 	public void acoes() {
 		pular();
 		mover();
 		atacar();
+//		colidiu();
 	}
 	
 	public void pular() {
@@ -102,7 +100,6 @@ public class Personagem {
 	public void mover() {
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
 			if(posicaoX < 1100){
-				setTextura(new Texture("ninja1.png"));
 				posicaoX += 10;		
 			}
 		}
@@ -118,21 +115,28 @@ public class Personagem {
 			isAtacando = true;
 		}
 		if(isAtacando) {
-			if(ataque.getPosicaoX()<1280) {
-				ataque.moverPosicaoX(20);
+			if(ataque.getSprite().getX()<1280) {
+				ataque.getSprite().setX(ataque.getSprite().getX() + 20);
 			}else {
 				atacou();
 			}
 		}else {
-			ataque.setPosicaoX(this.posicaoX);
-			ataque.setPosicaoY(this.posicaoY);
+			ataque.getSprite().setX(this.posicaoX + getSprite().getWidth()/2);
+			ataque.getSprite().setY(this.posicaoY + getSprite().getHeight()/2);
 		}
 	}
 	public void atacou() {
-		ataque.setPosicaoX(this.posicaoX);
-		ataque.setPosicaoY(this.posicaoY);
+		ataque.getSprite().setX(this.posicaoX + getSprite().getWidth()/2);
+		ataque.getSprite().setY(this.posicaoY + getSprite().getHeight()/2);
 		isAtacando = false;
 	}
+	
+//	public void colidiu() {
+//		if(ataqueBounds.overlaps(personagem2Bounds)) {
+//			personagem2.setVida(personagem2.getVida() - dano);
+//			atacou();
+//		}
+//	}
 	
 
 }

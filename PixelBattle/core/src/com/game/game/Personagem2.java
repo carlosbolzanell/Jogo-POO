@@ -6,9 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Personagem2 {
-	private String personagem;
-	private Texture textura = new Texture(personagem+".png");
-	private Sprite sprite = new Sprite(textura);
+	private Texture textura;
+	private Sprite sprite;
 	private int posicaoX = 1100;
 	private int posicaoY = 87;	
 	private float vida;
@@ -19,23 +18,22 @@ public class Personagem2 {
 	private boolean isAtacando = false;
 	private Ataque2 ataque2 = new Ataque2();
 	
-	public Personagem2(Texture textura, int posicaoX, int posicaoY, float vida, float dano) {
-		super();
-		setTextura(textura);
-		this.vida = vida;
-		this.dano = dano;
+	public Personagem2(String personagem) {
+		setTextura(personagem);
+		setSprite(getTextura());
+		ataque2.getSprite().setPosition(getPosicaoX() + getSprite().getWidth()/2, getPosicaoY() + getSprite().getHeight()/2);
 	}
 	
 	
 	public Personagem2() {
 		
 	}
-	
+
 	public Texture getTextura() {
 		return textura;
 	}
-	public void setTextura(Texture textura) {
-		this.textura = textura;
+	public void setTextura(String textura) {
+		this.textura = new Texture(textura);
 	}
 	public Sprite getSprite() {
 		return sprite;
@@ -116,19 +114,19 @@ public class Personagem2 {
 			isAtacando = true;
 		}
 		if(isAtacando) {
-			if(ataque2.getPosicaoX()>0) {
-				ataque2.trazerPosicaoX(20);
+			if(ataque2.getSprite().getX()>0) {
+				ataque2.getSprite().setX(ataque2.getSprite().getX() - 20);
 			}else {
 				atacou();
 			}
 		}else {
-			ataque2.setPosicaoX(this.posicaoX);
-			ataque2.setPosicaoY(this.posicaoY);
+			ataque2.getSprite().setX(this.posicaoX);
+			ataque2.getSprite().setY(this.posicaoY);
 		}
 	}
 	public void atacou() {
-		ataque2.setPosicaoX(this.posicaoX);
-		ataque2.setPosicaoY(this.posicaoY);
+		ataque2.getSprite().setX(this.posicaoX);
+		ataque2.getSprite().setY(this.posicaoY);
 		isAtacando = false;
 	}
 	
