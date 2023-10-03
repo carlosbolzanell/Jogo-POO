@@ -120,13 +120,13 @@ public class Personagem2 {
 				atacou();
 			}
 		}else {
-			ataque2.getSprite().setX(this.posicaoX);
-			ataque2.getSprite().setY(this.posicaoY);
+			ataque2.getSprite().setX(this.posicaoX + getSprite().getWidth()/2);
+			ataque2.getSprite().setY(this.posicaoY + getSprite().getHeight()/2);
 		}
 	}
 	public void atacou() {
-		ataque2.getSprite().setX(this.posicaoX);
-		ataque2.getSprite().setY(this.posicaoY);
+		ataque2.getSprite().setX(this.posicaoX + getSprite().getWidth()/2);
+		ataque2.getSprite().setY(this.posicaoY + getSprite().getHeight()/2);
 		isAtacando = false;
 	}
 	
