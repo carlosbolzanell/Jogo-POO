@@ -6,22 +6,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Ataque{
-	private Texture textura = new Texture("shuriken.png");
-	private Sprite sprite = new Sprite(textura);
+	private Texture textura;
+	private Sprite sprite;
 	private int velocidade;
+	private int dano;
 	
-	public Ataque(Texture textura, int velocidade) {
+	public Ataque(String textura, int velocidade, int dano) {
 		setTextura(textura);
+		setSprite(getTextura());
 		this.velocidade = velocidade;
-	}
-	public Ataque() {
-		
+		this.setDano(dano);
 	}
 	public Texture getTextura() {
 		return textura;
 	}
-	public void setTextura(Texture textura) {
-		this.textura = textura;
+	public void setTextura(String textura) {
+		this.textura = new Texture(textura);
 	}
 	public Sprite getSprite() {
 		return sprite;
@@ -34,6 +34,12 @@ public class Ataque{
 	}
 	public void setVelocidade(int velocidade) {
 		this.velocidade = velocidade;
+	}
+	public int getDano() {
+		return dano;
+	}
+	public void setDano(int dano) {
+		this.dano = dano;
 	}
 	
 
