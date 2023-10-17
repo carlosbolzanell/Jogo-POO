@@ -135,7 +135,7 @@ public class Personagem {
 					posicaoX -= 10;				
 				}
 			}
-			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && !isPulando) {
 				setTextura("verdeAgachado.png");
 				setSprite(getTextura());
 			}else {
@@ -207,6 +207,4 @@ public class Personagem {
 	public void setColidiu(boolean colidiu) {
 		this.colidiu = colidiu;
 	}
-	
-
 }

@@ -15,13 +15,15 @@ public class Game extends ApplicationAdapter {
 	private Personagem personagem;
 	private Personagem personagem2;
 	private Texture retangulo;
-	private int tamanho = 300;
+	private int tamanho1 = 500;
+	private int tamanho2 = 500;
+	private int position = 700;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		cenario = new Texture("Cenario.png");
-		personagem = new Personagem("ninja1.png", 10, 87, 200, new Ataque("shuriken.png", 20, 20), new SuperAtaque("shuriken.png", 10, 10), true);
+		personagem = new Personagem("personagemVermelha.png", 10, 87, 200, new Ataque("shuriken.png", 20, 20), new SuperAtaque("shuriken.png", 10, 10), true);
 		personagem2 = new Personagem("weg verde.png", 1000, 87, 200, new Ataque("mao.png", 20, 20), new SuperAtaque("superAtaqueVerde.png", 10, 10), false);
 		retangulo = new Texture("branco.png");
 	}
@@ -34,7 +36,8 @@ public class Game extends ApplicationAdapter {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
 		batch.draw(cenario, 0, 0);
-		batch.draw(retangulo,10,650, tamanho, 50);
+		batch.draw(retangulo,50,620, (tamanho1>0) ? tamanho1 : 0, 50);
+		batch.draw(retangulo, position ,620, (tamanho2>0) ? tamanho2 : 0, 50);
 		batch.draw(personagem2.getAtaque().getSprite(), personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY());
 		batch.draw(personagem2.getSprite(), personagem2.getPosicaoX(), personagem2.getPosicaoY());
 		batch.draw(personagem.getAtaque().getSprite(), personagem.getAtaque().getSprite().getX(), personagem.getAtaque().getSprite().getY());
@@ -59,24 +62,17 @@ public class Game extends ApplicationAdapter {
 		Rectangle ataque2Bounds = new Rectangle(personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY(), personagem2.getAtaque().getSprite().getWidth(), personagem2.getAtaque().getSprite().getHeight());
 		
 		if(ataque1Bounds.overlaps(personagem2Bounds)){
+			tamanho2 -= personagem.getAtaque().getDano();
+			position += personagem.getAtaque().getDano();
 			personagem.atacou();
 		}
 		if(ataque2Bounds.overlaps(personagem1Bounds)) {
 			personagem2.setContadorAtaque(personagem2.getContadorAtaque()+1);
-			tamanho -= personagem2.getAtaque().getDano();
+			tamanho1 -= personagem2.getAtaque().getDano();
 			personagem2.atacou();
 		}
-		if(personagem1Bounds.overlaps(personagem2Bounds)) {
-			personagem.setColidiu(true);
-		}else {
-			personagem.setColidiu(false);
-		}
-		
-		if(personagem2Bounds.overlaps(personagem1Bounds)) {
-			personagem2.setColidiu(true);
-		}else {
-			personagem2.setColidiu(false);
-		}
+		personagem.setColidiu( (personagem1Bounds.overlaps(personagem2Bounds)) ? true : false);
+		personagem2.setColidiu( (personagem2Bounds.overlaps(personagem1Bounds)) ? true : false);
 	}
 	
 	
