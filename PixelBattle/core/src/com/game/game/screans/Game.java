@@ -1,4 +1,4 @@
-package com.game.game;
+package com.game.game.screans;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.game.game.Ataque;
+import com.game.game.Personagem;
+import com.game.game.SuperAtaque;
 
 public class Game extends ApplicationAdapter {
 	public SpriteBatch batch;
@@ -56,7 +59,7 @@ public class Game extends ApplicationAdapter {
 	}
 	
 	public void colisao() {
-		Rectangle personagem1Bounds = new Rectangle(personagem.getPosicaoX(), personagem.getPosicaoY(), personagem.getSprite().getWidth() - 80, personagem.getSprite().getHeight());
+		Rectangle personagem1Bounds = new Rectangle(personagem.getPosicaoX(), personagem.getPosicaoY(), personagem.getSprite().getWidth(), personagem.getSprite().getHeight());
 		Rectangle personagem2Bounds = new Rectangle(personagem2.getPosicaoX(), personagem2.getPosicaoY(), personagem2.getSprite().getWidth(), personagem2.getSprite().getHeight());
 		Rectangle ataque1Bounds = new Rectangle(personagem.getAtaque().getSprite().getX(), personagem.getAtaque().getSprite().getY(), personagem.getAtaque().getSprite().getWidth(), personagem.getAtaque().getSprite().getHeight());
 		Rectangle ataque2Bounds = new Rectangle(personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY(), personagem2.getAtaque().getSprite().getWidth(), personagem2.getAtaque().getSprite().getHeight());
@@ -64,6 +67,10 @@ public class Game extends ApplicationAdapter {
 		if(ataque1Bounds.overlaps(personagem2Bounds)){
 			tamanho2 -= personagem.getAtaque().getDano();
 			position += personagem.getAtaque().getDano();
+			personagem2.setVida(personagem2.getVida() - personagem.getAtaque().getDano());
+			if(personagem2.getVida()<=0){
+
+			}
 			personagem.atacou();
 		}
 		if(ataque2Bounds.overlaps(personagem1Bounds)) {

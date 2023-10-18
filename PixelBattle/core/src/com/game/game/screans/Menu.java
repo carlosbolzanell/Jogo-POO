@@ -1,4 +1,4 @@
-package com.game.game;
+package com.game.game.screans;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -34,7 +34,7 @@ public class Menu extends ApplicationAdapter  {
 	public void render() {
 		batch.begin();
 	    batch.draw(img, 0, 0);
-		bitmap.draw(batch, "Começar", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		bitmap.draw(batch, "Comeï¿½ar", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		batch.end();
 		
 	}
