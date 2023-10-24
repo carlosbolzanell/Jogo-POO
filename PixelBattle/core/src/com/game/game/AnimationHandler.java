@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import screens.GameScreen;
+
 public class AnimationHandler {
-    Game game;
+    GameScreen game;
     float stateTime = 0;
     Animation<TextureRegion> animationTrack;
     Texture animationSheet;
@@ -32,7 +34,7 @@ public class AnimationHandler {
         stateTime = 0;
     }
 
-    public AnimationHandler(Game game, Texture animationSheet, int FRAME_COLS, int FRAME_ROWS, float frameDuration) {
+    public AnimationHandler(GameScreen game, Texture animationSheet, int FRAME_COLS, int FRAME_ROWS, float frameDuration) {
         this.game = game;
         this.animationSheet = animationSheet;
         this.FRAME_COLS = FRAME_COLS;
