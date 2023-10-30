@@ -54,8 +54,8 @@ public class PersonagemDireita extends Personagem{
 	public void atacar() {	
 		if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
 			isAtacando = true;
-//			setTextura("./bell/direita/atacando.png");
-//			setSprite(getTextura());
+			setTextura("./bell/direita/atacando.png");
+			setSprite(getTextura());
 		}else {
 			setTextura("./bell/direita/padrao.png");
 			setSprite(getTextura());
