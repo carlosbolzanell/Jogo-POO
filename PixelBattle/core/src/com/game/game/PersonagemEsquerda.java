@@ -9,8 +9,6 @@ public class PersonagemEsquerda extends Personagem{
 		super(textura, posicaoX, posicaoY, vida, ataque, superAtaque);
 	}
 	
-	private boolean isAtacando = false;
-	
 	@Override
 	public void pular() {
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -54,15 +52,12 @@ public class PersonagemEsquerda extends Personagem{
 	public void atacar() {		
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.R)){
-			isAtacando = true;	
+			setAtacando(true);	
 			setTextura("./xitxor/esquerda/atacando.png");
-			setSprite(getTextura());
-		}else {
-			setTextura("./xitxor/esquerda/padrao.png");
 			setSprite(getTextura());
 		}
 		
-		if(isAtacando) {
+		if(isAtacando()) {
 			if(getAtaque().getSprite().getX()<1280) {
 				getAtaque().getSprite().setX(getAtaque().getSprite().getX() + 20);
 			}else {
@@ -72,12 +67,35 @@ public class PersonagemEsquerda extends Personagem{
 			getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
 			getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
 		}	
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+			if(getContadorAtaque()>=6) {
+				setSuperAtacando(true);
+				setTextura("./xitxor/esquerda/atacando.png");
+				setSprite(getTextura());
+				setContadorAtaque(0);
+			}
+		}
+		
+		if(isSuperAtacando()) {
+			if(getSuperAtaque().getSprite().getX() < 1280) {
+				getSuperAtaque().getSprite().setX(getSuperAtaque().getSprite().getX() + 20);
+			}else {
+				atacou();
+			}
+		}else {
+			getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+			getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		}
 	}
 	
 	public void atacou() {
 		getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
 		getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
-		isAtacando = false;
+		getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+		getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		setSuperAtacando(false);
+		setAtacando(false);
 	}
 
 }

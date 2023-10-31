@@ -8,7 +8,6 @@ public class PersonagemDireita extends Personagem{
 	public PersonagemDireita(String textura, int posicaoX, int posicaoY, int vida, Ataque ataque, SuperAtaque superAtaque) {
 		super(textura, posicaoX, posicaoY, vida, ataque, superAtaque);
 	}
-	private boolean isAtacando = false;
 	
 	@Override
 	public void pular() {
@@ -53,15 +52,12 @@ public class PersonagemDireita extends Personagem{
 	@Override
 	public void atacar() {	
 		if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-			isAtacando = true;
+			setAtacando(true);
 			setTextura("./bell/direita/atacando.png");
-			setSprite(getTextura());
-		}else {
-			setTextura("./bell/direita/padrao.png");
 			setSprite(getTextura());
 		}	
 		
-		if(isAtacando) {
+		if(isAtacando()) {
 			if(getAtaque().getSprite().getX() > 0) {
 				getAtaque().getSprite().setX(getAtaque().getSprite().getX() - 20);
 			}else {
@@ -71,12 +67,35 @@ public class PersonagemDireita extends Personagem{
 			getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
 			getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
 		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+			if(getContadorAtaque()>=6) {
+				setSuperAtacando(true);
+				setTextura("./bell/direita/atacando.png");
+				setSprite(getTextura());	
+				setContadorAtaque(0);
+			}
+		}
+		
+		if(isSuperAtacando()) {
+			if(getSuperAtaque().getSprite().getX() > 0) {
+				getSuperAtaque().getSprite().setX(getSuperAtaque().getSprite().getX() - 20);
+			}else {
+				atacou();
+			}
+		}else {
+			getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+			getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		}
 	}
 	
 	public void atacou() {
 		getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
 		getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
-		isAtacando = false;
+		getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+		getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		setSuperAtacando(false);
+		setAtacando(false);
 	}
 
 }

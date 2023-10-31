@@ -15,6 +15,7 @@ public class Personagem {
 	private float gravidade = -0.99f;
 	private boolean isPulando;
 	private boolean isAtacando = false;
+	private boolean isSuperAtacando = false;
 	private Ataque ataque;
 	private SuperAtaque superAtaque;
 	private int contadorAtaque = 0;
@@ -110,4 +111,17 @@ public class Personagem {
 	public void pular() {}
 	public void mover() {}
 	public void atacar() {}
+	
+	public boolean isAtacando() {
+		return isAtacando;
+	}
+	public void setAtacando(boolean isAtacando) {
+		this.isAtacando = isAtacando;
+	}
+	public boolean isSuperAtacando() {
+		return isSuperAtacando;
+	}
+	public void setSuperAtacando(boolean isSuperAtacando) {
+		this.isSuperAtacando = isSuperAtacando;
+	}
 }
