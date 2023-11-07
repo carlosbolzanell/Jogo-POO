@@ -1,15 +1,10 @@
-package screens;
+package com.game.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.game.game.Ataque;
 import com.game.game.MyGame;
-import com.game.game.Personagem;
-import com.game.game.SuperAtaque;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -56,7 +51,7 @@ public class MenuScreen extends ScreenAdapter{
 	    public void changeScreen() {
 	    	if(Gdx.input.isKeyPressed(Input.Keys.G)) {
 	    		MyGame game = (MyGame) Gdx.app.getApplicationListener();
-                game.setScreen(new GameScreen());
+                game.setScreen(new ChoiceScreen());
 	    	}
 	    }
 

@@ -13,13 +13,13 @@ public class Personagem {
 	private float vida;
 	private float velocidadePulo = 20f;
 	private float gravidade = -0.99f;
-	private boolean isPulando;
+	private boolean isPulando = false;
 	private boolean isAtacando = false;
 	private boolean isSuperAtacando = false;
+	private boolean colidiu = false;
 	private Ataque ataque;
 	private SuperAtaque superAtaque;
 	private int contadorAtaque = 0;
-	private boolean colidiu = false;
 	private int cima;
 	private int direita;
 	private int esquerda;
@@ -112,6 +112,7 @@ public class Personagem {
 	public void setAtacando(boolean atacando) {isAtacando = atacando;}
 	public boolean isSuperAtacando() {return isSuperAtacando;}
 	public void setSuperAtacando(boolean superAtacando) {isSuperAtacando = superAtacando;}
+
 	public void acoes() {
 		pular(this.cima);
 		mover(this.direita, this.esquerda, this.baixo);
@@ -135,7 +136,7 @@ public class Personagem {
 		}
 	}
 	public void mover(int direita, int esquerda, int baixo) {
-		if(Gdx.input.isKeyPressed(direita)) {
+		if(Gdx.input.isKeyPressed(direita) && !isColidiu()) {
 			if(getPosicaoX() < 1100) {
 				setPosicaoX(getPosicaoX() + 10);
 			}
@@ -162,7 +163,7 @@ public class Personagem {
 		}
 		if(isAtacando()) {
 			if(ataqueInt == 66 ? getAtaque().getSprite().getX() > 0 : getAtaque().getSprite().getX() < 1280) {
-				getAtaque().getSprite().setX(getAtaque().getSprite().getX() + (ataqueInt == 66 ? -getAtaque().getDano() : getAtaque().getDano()));
+				getAtaque().getSprite().setX(getAtaque().getSprite().getX() + (ataqueInt == 66 ? -getAtaque().getVelocidade() : getAtaque().getVelocidade()));
 			}else {
 				atacou();
 			}
@@ -200,5 +201,4 @@ public class Personagem {
 		setSuperAtacando(false);
 		setAtacando(false);
 	}
-
 }

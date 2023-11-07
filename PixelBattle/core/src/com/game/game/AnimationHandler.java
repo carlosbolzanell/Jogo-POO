@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import screens.GameScreen;
+import com.game.screens.GameScreen;
 
 public class AnimationHandler {
     GameScreen game;

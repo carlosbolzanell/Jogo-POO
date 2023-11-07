@@ -1,4 +1,4 @@
-package screens;
+package com.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -20,14 +20,20 @@ public class GameScreen extends ScreenAdapter {
 	private int tamanho1 = 500;
 	private int tamanho2 = 500;
 	private int position = 700;
+	private String caracter1;
+	private String caracter2;
 
-    
+	public GameScreen(String caracter1, String caracter2){
+		this.caracter1 = caracter1;
+		this.caracter2 = caracter2;
+	}
+
     @Override
     public void show() {
     	batch = new SpriteBatch();
 		cenario = new Texture("Cenario.png");
-		personagem1 = new Personagem("./xitxor/esquerda/padrao.png", 10, 87, 500, new Ataque("./xitxor/esquerda/ataque.png", 20, 20), new SuperAtaque("./xitxor/esquerda/especial.png", 10, 40), 51, 47, 29, 32, 46, 33, "xitxor", "esquerda");
-		personagem2 = new Personagem("./bell/direita/padrao.png", 1000, 87, 500, new Ataque("./bell/direita/ataque.png", 20, 20), new SuperAtaque("./bell/direita/especial.png", 10, 40), 19, 20, 21, 22, 66, 60, "bell", "direita");
+		personagem1 = new Personagem("./"+caracter1+"/esquerda/padrao.png", 10, 87, 500, new Ataque("./"+caracter1+"/esquerda/ataque.png", 20, 20), new SuperAtaque("./"+caracter1+"/esquerda/especial.png", 10, 40), 51, 47, 29, 32, 46, 33, caracter1, "esquerda");
+		personagem2 = new Personagem("./"+caracter2+"/direita/padrao.png", 1000, 87, 500, new Ataque("./"+caracter2+"/direita/ataque.png", 20, 20), new SuperAtaque("./"+caracter2+"/direita/especial.png", 10, 40), 19, 20, 21, 22, 66, 60, caracter2, "direita");
 		retangulo = new Texture("branco.png");
     }
 
