@@ -8,15 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.game.Ataque;
 import com.game.game.MyGame;
-import com.game.game.PersonagemDireita;
-import com.game.game.PersonagemEsquerda;
+import com.game.game.Personagem;
 import com.game.game.SuperAtaque;
 
 public class GameScreen extends ScreenAdapter {
 	public SpriteBatch batch;
 	private Texture cenario;
-	private PersonagemEsquerda personagem1;
-	private PersonagemDireita personagem2;
+	private Personagem personagem1;
+	private Personagem personagem2;
 	private Texture retangulo;
 	private int tamanho1 = 500;
 	private int tamanho2 = 500;
@@ -27,8 +26,8 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
     	batch = new SpriteBatch();
 		cenario = new Texture("Cenario.png");
-		personagem1 = new PersonagemEsquerda("./xitxor/esquerda/padrao.png", 10, 87, 500, new Ataque("./xitxor/esquerda/ataque.png", 20, 20), new SuperAtaque("./xitxor/esquerda/especial.png", 10, 40));
-		personagem2 = new PersonagemDireita("./bell/direita/padrao.png", 1000, 87, 500, new Ataque("./bell/direita/ataque.png", 20, 20), new SuperAtaque("./bell/direita/especial.png", 10, 40));
+		personagem1 = new Personagem("./xitxor/esquerda/padrao.png", 10, 87, 500, new Ataque("./xitxor/esquerda/ataque.png", 20, 20), new SuperAtaque("./xitxor/esquerda/especial.png", 10, 40), 51, 47, 29, 32, 46, 33, "xitxor", "esquerda");
+		personagem2 = new Personagem("./bell/direita/padrao.png", 1000, 87, 500, new Ataque("./bell/direita/ataque.png", 20, 20), new SuperAtaque("./bell/direita/especial.png", 10, 40), 19, 20, 21, 22, 66, 60, "bell", "direita");
 		retangulo = new Texture("branco.png");
     }
 
@@ -43,17 +42,17 @@ public class GameScreen extends ScreenAdapter {
 		batch.draw(retangulo,50,620, (tamanho1>0) ? tamanho1 : 0, 50);
 		batch.draw(retangulo, position ,620, (tamanho2>0) ? tamanho2 : 0, 50);
 		if(personagem2.isAtacando()) {
-			batch.draw(personagem2.getAtaque().getSprite(), personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY());			
+			batch.draw(personagem2.getAtaque().getSprite(), personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY()+50);
 		};
 		if(personagem2.isSuperAtacando()) {
-			batch.draw(personagem2.getSuperAtaque().getSprite(), personagem2.getSuperAtaque().getSprite().getX(), personagem2.getSuperAtaque().getSprite().getY());	
+			batch.draw(personagem2.getSuperAtaque().getSprite(), personagem2.getSuperAtaque().getSprite().getX(), personagem2.getSuperAtaque().getSprite().getY()+50);
 		}
 		batch.draw(personagem2.getSprite(), personagem2.getPosicaoX(), personagem2.getPosicaoY());
 		if(personagem1.isAtacando()) {
-			batch.draw(personagem1.getAtaque().getSprite(), personagem1.getAtaque().getSprite().getX(), personagem1.getAtaque().getSprite().getY());			
+			batch.draw(personagem1.getAtaque().getSprite(), personagem1.getAtaque().getSprite().getX(), personagem1.getAtaque().getSprite().getY()+50);
 		}
 		if(personagem1.isSuperAtacando()) {
-			batch.draw(personagem1.getSuperAtaque().getSprite(), personagem1.getSuperAtaque().getSprite().getX(), personagem1.getSuperAtaque().getSprite().getY());	
+			batch.draw(personagem1.getSuperAtaque().getSprite(), personagem1.getSuperAtaque().getSprite().getX(), personagem1.getSuperAtaque().getSprite().getY()+50);
 		}
 		batch.draw(personagem1.getSprite(), personagem1.getPosicaoX(), personagem1.getPosicaoY());
 		batch.end();
@@ -70,12 +69,12 @@ public class GameScreen extends ScreenAdapter {
 		personagem2.getAtaque().getTextura().dispose();
     }
     public void colisao() {
-		Rectangle personagem1Bounds = new Rectangle(personagem1.getPosicaoX(), personagem1.getPosicaoY(), personagem1.getSprite().getWidth() - 80, personagem1.getSprite().getHeight());
+		Rectangle personagem1Bounds = new Rectangle(personagem1.getPosicaoX(), personagem1.getPosicaoY(), personagem1.getSprite().getWidth(), personagem1.getSprite().getHeight());
 		Rectangle personagem2Bounds = new Rectangle(personagem2.getPosicaoX(), personagem2.getPosicaoY(), personagem2.getSprite().getWidth(), personagem2.getSprite().getHeight());
-		
+
 		if(personagem1.isAtacando()) {
-			Rectangle ataque1Bounds = new Rectangle(personagem1.getAtaque().getSprite().getX(), personagem1.getAtaque().getSprite().getY(), personagem1.getAtaque().getSprite().getWidth(), personagem1.getAtaque().getSprite().getHeight());
-			
+			Rectangle ataque1Bounds = new Rectangle(personagem1.getAtaque().getSprite().getX(), personagem1.getAtaque().getSprite().getY() +50, personagem1.getAtaque().getSprite().getWidth(), personagem1.getAtaque().getSprite().getHeight());
+
 			if(ataque1Bounds.overlaps(personagem2Bounds)){
 				personagem1.setContadorAtaque(personagem1.getContadorAtaque()+1);
 				tamanho2 -= personagem1.getAtaque().getDano();
@@ -85,7 +84,7 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 		if(personagem2.isAtacando()) {
-			Rectangle ataque2Bounds = new Rectangle(personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY(), personagem2.getAtaque().getSprite().getWidth(), personagem2.getAtaque().getSprite().getHeight());
+			Rectangle ataque2Bounds = new Rectangle(personagem2.getAtaque().getSprite().getX(), personagem2.getAtaque().getSprite().getY()+50, personagem2.getAtaque().getSprite().getWidth(), personagem2.getAtaque().getSprite().getHeight());
 			
 			if(ataque2Bounds.overlaps(personagem1Bounds)) {
 				personagem2.setContadorAtaque(personagem2.getContadorAtaque()+1);
@@ -96,7 +95,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 		
 		if(personagem2.isSuperAtacando()) {
-			Rectangle ataque2Bounds = new Rectangle(personagem2.getSuperAtaque().getSprite().getX(), personagem2.getSuperAtaque().getSprite().getY(), personagem2.getSuperAtaque().getSprite().getWidth(), personagem2.getSuperAtaque().getSprite().getHeight());
+			Rectangle ataque2Bounds = new Rectangle(personagem2.getSuperAtaque().getSprite().getX(), personagem2.getSuperAtaque().getSprite().getY()+50, personagem2.getSuperAtaque().getSprite().getWidth(), personagem2.getSuperAtaque().getSprite().getHeight());
 			
 			if(ataque2Bounds.overlaps(personagem1Bounds)) {
 				tamanho1 -= personagem2.getSuperAtaque().getDano();
@@ -106,7 +105,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 		
 		if(personagem1.isSuperAtacando()) {
-			Rectangle ataque1Bounds = new Rectangle(personagem1.getSuperAtaque().getSprite().getX(), personagem1.getSuperAtaque().getSprite().getY(), personagem1.getSuperAtaque().getSprite().getWidth(), personagem1.getSuperAtaque().getSprite().getHeight());
+			Rectangle ataque1Bounds = new Rectangle(personagem1.getSuperAtaque().getSprite().getX(), personagem1.getSuperAtaque().getSprite().getY()+50, personagem1.getSuperAtaque().getSprite().getWidth(), personagem1.getSuperAtaque().getSprite().getHeight());
 			
 			if(ataque1Bounds.overlaps(personagem2Bounds)) {
 				tamanho2 -= personagem1.getSuperAtaque().getDano();

@@ -20,8 +20,17 @@ public class Personagem {
 	private SuperAtaque superAtaque;
 	private int contadorAtaque = 0;
 	private boolean colidiu = false;
+	private int cima;
+	private int direita;
+	private int esquerda;
+	private int baixo;
+	private int ataqueInt;
+	private int superAtaqueInt;
+	private String nome;
+	private String lado;
+
 	
-	public Personagem(String textura, int posicaoX, int posicaoY, int vida, Ataque ataque, SuperAtaque superAtaque) {
+	public Personagem(String textura, int posicaoX, int posicaoY, int vida, Ataque ataque, SuperAtaque superAtaque, int cima, int baixo, int esquerda, int direita, int ataqueInt, int superAtaqueInt, String nome, String lado) {
 		setTextura(textura);
 		setSprite(getTextura());	
 		ataque.getSprite().setPosition(getPosicaoX() + getSprite().getWidth()/2, getPosicaoY() + getSprite().getHeight()/2);
@@ -30,6 +39,14 @@ public class Personagem {
 		setVida(vida);
 		setAtaque(ataque);
 		setSuperAtaque(superAtaque);
+		this.cima = cima;
+		this.baixo = baixo;
+		this.esquerda = esquerda;
+		this.direita = direita;
+		this.ataqueInt = ataqueInt;
+		this.superAtaqueInt = superAtaqueInt;
+		this.nome = nome;
+		this.lado = lado;
 	}
 	public Texture getTextura() {
 		return textura;
@@ -91,37 +108,97 @@ public class Personagem {
 	public void setPulando(boolean isPulando) {
 		this.isPulando = isPulando;
 	}
-	public float getVelocidadePulo() {
-		return velocidadePulo;
-	}
-	public void setVelocidadePulo(float velocidadePulo) {
-		this.velocidadePulo = velocidadePulo;
-	}
-	public float getGravidade() {
-		return gravidade;
-	}
-	public void setGravidade(float gravidade) {
-		this.gravidade = gravidade;
-	}
+	public boolean isAtacando() {return isAtacando;}
+	public void setAtacando(boolean atacando) {isAtacando = atacando;}
+	public boolean isSuperAtacando() {return isSuperAtacando;}
+	public void setSuperAtacando(boolean superAtacando) {isSuperAtacando = superAtacando;}
 	public void acoes() {
-		pular();
-		mover();
-		atacar();
+		pular(this.cima);
+		mover(this.direita, this.esquerda, this.baixo);
+		atacar(this.ataqueInt, this.superAtaqueInt);
 	}
-	public void pular() {}
-	public void mover() {}
-	public void atacar() {}
-	
-	public boolean isAtacando() {
-		return isAtacando;
+	public void pular(int cima) {
+		if(Gdx.input.isKeyPressed(cima)) {
+			if(getPosicaoY() == 87) {
+				velocidadePulo = 20f;
+				setPulando(true);
+			}
+		}
+		if(isPulando()) {
+			setPosicaoY(getPosicaoY() + velocidadePulo);
+			velocidadePulo = velocidadePulo + gravidade;
+
+			if(getPosicaoY() <= 87) {
+				setPosicaoY(87);
+				setPulando(false);
+			}
+		}
 	}
-	public void setAtacando(boolean isAtacando) {
-		this.isAtacando = isAtacando;
+	public void mover(int direita, int esquerda, int baixo) {
+		if(Gdx.input.isKeyPressed(direita)) {
+			if(getPosicaoX() < 1100) {
+				setPosicaoX(getPosicaoX() + 10);
+			}
+		}
+		if(Gdx.input.isKeyPressed(esquerda) && !isColidiu()) {
+			if(getPosicaoX() > 0) {
+				setPosicaoX(getPosicaoX() - 10);
+			}
+		}
+
+		if(Gdx.input.isKeyPressed(baixo) && !isPulando()) {
+			setTextura("./"+this.nome+"/"+this.lado+"/agachado.png");
+			setSprite(getTextura());
+		}else {
+			setTextura("./"+this.nome+"/"+this.lado+"/padrao.png");
+			setSprite(getTextura());
+		}
 	}
-	public boolean isSuperAtacando() {
-		return isSuperAtacando;
+	public void atacar(int ataque, int superAtaque) {
+		if(Gdx.input.isKeyPressed(ataque)){
+			setAtacando(true);
+			setTextura("./"+this.nome+"/"+this.lado+"/atacando.png");
+			setSprite(getTextura());
+		}
+		if(isAtacando()) {
+			if(ataqueInt == 66 ? getAtaque().getSprite().getX() > 0 : getAtaque().getSprite().getX() < 1280) {
+				getAtaque().getSprite().setX(getAtaque().getSprite().getX() + (ataqueInt == 66 ? -getAtaque().getDano() : getAtaque().getDano()));
+			}else {
+				atacou();
+			}
+		}else {
+			getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+			getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		}
+
+		if(Gdx.input.isKeyPressed(superAtaque)) {
+			if(getContadorAtaque()>=6) {
+				setSuperAtacando(true);
+				setTextura("./"+this.nome+"/"+this.lado+"/atacando.png");
+				setSprite(getTextura());
+				setContadorAtaque(0);
+			}
+		}
+
+		if(isSuperAtacando()) {
+			if(getSuperAtaque().getSprite().getX() > 0) {
+				getSuperAtaque().getSprite().setX(getSuperAtaque().getSprite().getX() + (ataqueInt == 66 ? -getAtaque().getDano() : getAtaque().getDano()));
+			}else {
+				atacou();
+			}
+		}else {
+			getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+			getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		}
 	}
-	public void setSuperAtacando(boolean isSuperAtacando) {
-		this.isSuperAtacando = isSuperAtacando;
+
+	public void atacou() {
+		getAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+		getAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		getSuperAtaque().getSprite().setX(getPosicaoX() + getSprite().getWidth()/2);
+		getSuperAtaque().getSprite().setY(getPosicaoY() + getSprite().getHeight()/2);
+		setSuperAtacando(false);
+		setAtacando(false);
 	}
+
 }
