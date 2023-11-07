@@ -7,6 +7,6 @@ import com.game.screens.MenuScreen;
 public class MyGame extends Game {
     @Override
     public void create() {
-        setScreen(new ChoiceScreen());
+        setScreen(new MenuScreen());
     }
 }

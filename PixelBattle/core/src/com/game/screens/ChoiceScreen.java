@@ -18,6 +18,7 @@ public class ChoiceScreen extends ScreenAdapter{
 	private Texture selecao2;
 	private String caracter1;
 	private String caracter2;
+	private  Texture inicio;
 
 	@Override
     public void show() {
@@ -25,6 +26,7 @@ public class ChoiceScreen extends ScreenAdapter{
 		img = new Texture("Cenario.png");
 		selecao1 = new Texture("selecaop1normal.png");
 		selecao2 = new Texture("selecaop2normal.png");
+		inicio = new Texture("Inicio.png");
     }
 
     @Override
@@ -35,8 +37,9 @@ public class ChoiceScreen extends ScreenAdapter{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0);
-		batch.draw(selecao1, 50, img.getHeight()/2 - 200);
-		batch.draw(selecao2, 700, img.getHeight()/2 - 200);
+		batch.draw(selecao1, 20, img.getHeight()/2 - 200);
+		batch.draw(inicio, 470, img.getHeight()/2 - 140);
+		batch.draw(selecao2, 790, img.getHeight()/2 - 200);
 		batch.end();
     }
     
