@@ -19,6 +19,9 @@ public class ChoiceScreen extends ScreenAdapter{
 	private String caracter1;
 	private String caracter2;
 	private  Texture inicio;
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+	private BitmapFont bitmap;
 
 	@Override
     public void show() {
@@ -27,6 +30,16 @@ public class ChoiceScreen extends ScreenAdapter{
 		selecao1 = new Texture("selecaop1normal.png");
 		selecao2 = new Texture("selecaop2normal.png");
 		inicio = new Texture("Inicio.png");
+
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+		parameter.size = 30;
+		parameter.borderWidth = 1;
+		parameter.borderColor = Color.BLACK;
+		parameter.color = Color.WHITE;
+
+		bitmap = generator.generateFont(parameter);
     }
 
     @Override
@@ -40,6 +53,7 @@ public class ChoiceScreen extends ScreenAdapter{
 		batch.draw(selecao1, 20, img.getHeight()/2 - 200);
 		batch.draw(inicio, 470, img.getHeight()/2 - 140);
 		batch.draw(selecao2, 790, img.getHeight()/2 - 200);
+		bitmap.draw(batch, "Aperte F para Comecar", 480, img.getHeight()/2 - 150);
 		batch.end();
     }
     

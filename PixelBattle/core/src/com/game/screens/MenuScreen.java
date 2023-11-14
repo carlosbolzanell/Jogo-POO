@@ -39,7 +39,7 @@ public class MenuScreen extends ScreenAdapter{
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	        batch.begin();
 		    batch.draw(img, 0, 0);
-			bitmap.draw(batch, "Comecar", Gdx.graphics.getWidth()/2 -50, Gdx.graphics.getHeight()/2);
+			bitmap.draw(batch, "Aperte G para Comecar", Gdx.graphics.getWidth()/2 -140, Gdx.graphics.getHeight()/2);
 			batch.end();
 	    }
 	    
